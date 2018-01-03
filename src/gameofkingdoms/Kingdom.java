@@ -36,6 +36,11 @@ public class Kingdom {
         castle.changeOwner(this);
     }
     
+    public void removeCastle(Castle castle) {
+        castles.removeCastle(castle);
+        castle.changeOwner(null);
+    }
+    
     public void addSoldier(Soldier soldier) {
         army.addSoldier(soldier);
     }

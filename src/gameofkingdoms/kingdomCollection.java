@@ -5,33 +5,53 @@
  */
 package gameofkingdoms;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author tiagoantunes
  */
 public class kingdomCollection {
-
+    private ArrayList<Kingdom> kingdomList = new ArrayList<>();
     private int index = 0;
-    private final Kingdom[] kingdomList;
-    private final int maxIndex;
-
-    public kingdomCollection(int nKingdoms) {
-        kingdomList = new Kingdom[nKingdoms];
-        maxIndex = nKingdoms;
-    }
 
     public Kingdom getNextKingdom() {
-        Kingdom next = kingdomList[index%maxIndex];
+        //Kingdom next = kingdomList[index%maxIndex];
         index++;
-        return next;
+        return this.getCurrentKingdom();
     }
     
     public Kingdom getCurrentKingdom() {
-        Kingdom current = kingdomList[index%maxIndex];
+        Kingdom current = kingdomList.get(index % kingdomList.size());
         return current;
     }
     
-    public void addNthKingdom(Kingdom k, int i) {
-        kingdomList[i] = k;
+    public void addKingdom(Kingdom k) {
+        kingdomList.add(k);
+    }
+    
+    public boolean checkIfKingdomExists(String kingdomName) {
+        for (Kingdom kingdom : kingdomList) {
+            if (kingdom.getName().equals(kingdomName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public int nKingdoms() {
+        return this.kingdomList.size();
+    }
+    
+    public void displayKingdoms() {
+        String r = "";
+        int i = 0;
+        while (!kingdomList.get(i).equals(kingdomList.get(kingdomList.size() - 1))) {
+            r = r + kingdomList.get(i).getName() + "; ";
+            i++;
+        }
+        r = r + kingdomList.get(kingdomList.size() - 1).getName();
+        System.out.println(r);
+        
     }
 }

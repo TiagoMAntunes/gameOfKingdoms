@@ -37,11 +37,19 @@ public class castleCollection {
     
     public Castle getCastle(String name) {
         for (Castle castle : castles) {
-            if (castle.getName().equals(name)) {
+            if (castle.getName().toLowerCase().equals(name.toLowerCase())) {
                 return castle;
             }
         }
         return null;
+    }
+    
+    public int numberOfCastles() {
+        return castles.size();
+    }
+    
+    public ArrayList<Castle> getAllCastles() {
+        return castles;
     }
     
 }

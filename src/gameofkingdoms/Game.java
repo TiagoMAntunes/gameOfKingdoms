@@ -18,6 +18,8 @@ public class Game {
     private String kingdom = "";
     private kingdomCollection kingdoms;
     private castleCollection castles;
+    private int sizeH;
+    private int sizeV;
 
     public String getPlay(String[] info) {
         //Gets input from the user
@@ -49,6 +51,7 @@ public class Game {
                 break;
             case "mapa":
                 if (gameActive) {
+                    giveGameState();
                 } else {
                     System.out.println("Comando inativo.");
                 }
@@ -99,7 +102,9 @@ public class Game {
             System.out.println("Erro fatal, jogo nao inicializado");
             return false;
         }
-
+        
+        sizeH = maxX;
+        sizeV = maxY;
         Scanner sc = new Scanner(System.in);
 
         //get all the game castles
@@ -135,42 +140,47 @@ public class Game {
 
         //get kingdoms
         System.out.println(nKingdoms + " reinos:");
-        counter = 0;
-        String[] kingdomNames = new String[nKingdoms];
-        String[] castleHelper = new String[nKingdoms];
+        kingdoms = new kingdomCollection();
+
         for (int i = 0; i < nKingdoms; i++) {
             String name = sc.next();
             String castleID = sc.nextLine().replaceFirst(" ", "");
-            if (Arrays.asList(kingdomNames).contains(name)) {
+
+            if (kingdoms.checkIfKingdomExists(name)) {
                 System.out.println("Os reinos nao podem ter nomes duplicados.");
-            } else if (castles.getCastle(name) == null) {
-                System.out.println("Castelo nao existe.");
-            } else if (castles.getCastle(name).getCurrentOwner() == null) {
-                System.out.println("Castelo ja ocupado.");
+            } else if (castles.getCastle(castleID) == null) {
+                System.out.println("O castelo nao existe.");
+            } else if (!castles.getCastle(castleID).getCurrentOwner().equals("sem dono")) {
+                System.out.println("O castelo ja esta ocupado.");
             } else {
-                counter++;
-                kingdomNames[counter - 1] = name;
-                castleHelper[counter - 1] = castleID;
+                Kingdom tempKingdom = new Kingdom(name);
+                Castle tempCastle = castles.getCastle(castleID);
+                tempKingdom.addCastle(tempCastle);
+                kingdoms.addKingdom(tempKingdom);
             }
         }
 
-        kingdoms = new kingdomCollection(counter);
-        
-        for (int i = 0; i < counter; i++) {
-            Kingdom tempKingdom = new Kingdom(kingdomNames[i]);
-            Castle castle = castles.getCastle(castleHelper[i]);
-            kingdoms.addNthKingdom(tempKingdom, i);
-            if (castle == null) {
-                System.out.println("Castelo nao existe.");
-            } else {
-                tempKingdom.addCastle(castle);
-            }
+        //validate number of kingdoms
+        if (kingdoms.nKingdoms() < 2) {
+            System.out.println("Numero insuficiente de reinos.");
+            System.out.println("Erro fatal, jogo nao inicializado.");
+            return false;
+        } else {
+            System.out.println("Jogo iniciado, comeca o reino " + kingdoms.getCurrentKingdom().getName());
+            return true;
         }
-
-        System.out.println("Jogo iniciado, comeca o reino " + kingdoms.getCurrentKingdom().getName());
-        return true;
     }
 
+    public void giveGameState() {
+        System.out.println(String.valueOf(sizeH) + " " + String.valueOf(sizeV));
+        System.out.println(String.valueOf(castles.numberOfCastles()) + " castelos:");
+        for (Castle castle : castles.getAllCastles()) {
+            System.out.println(castle.getName() + " (" + castle.getCurrentOwner() + ")");
+        }
+        System.out.println(String.valueOf(kingdoms.nKingdoms()) + " reinos:");
+        kingdoms.displayKingdoms();
+    }
+    
     public void displayHelpScreen() {
         System.out.println("novo - Novo jogo");
         if (gameActive) {
