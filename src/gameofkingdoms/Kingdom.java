@@ -45,5 +45,8 @@ public class Kingdom {
         army.addSoldier(soldier);
     }
     
+    public castleCollection getCastles() {
+        return castles;
+    }
     
 }

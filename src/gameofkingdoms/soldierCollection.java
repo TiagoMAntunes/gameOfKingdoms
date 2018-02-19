@@ -28,9 +28,14 @@ public class soldierCollection {
     }
 
     public void displaySoldiers() {
-        for (Soldier soldier : soldiers) {
-            int[] position = soldier.soldierPosition();
-            System.out.println(soldier.getSoldierClass() + " na posicao (" + position[0] + ',' + position[1] + ')');
+        if (soldiers.isEmpty()) {
+            System.out.println("Sem exercito.");
+        } else {
+            System.out.println(soldiers.size() + " soldados:");
+            for (Soldier soldier : soldiers) {
+                int[] position = soldier.soldierPosition();
+                System.out.println(soldier.getSoldierClass() + " na posicao (" + position[0] + ',' + position[1] + ')');
+            }
         }
     }
 }

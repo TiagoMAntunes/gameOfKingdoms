@@ -16,7 +16,6 @@ public class kingdomCollection {
     private int index = 0;
 
     public Kingdom getNextKingdom() {
-        //Kingdom next = kingdomList[index%maxIndex];
         index++;
         return this.getCurrentKingdom();
     }
@@ -46,7 +45,7 @@ public class kingdomCollection {
     public void displayKingdoms() {
         String r = "";
         int i = 0;
-        while (!kingdomList.get(i).equals(kingdomList.get(kingdomList.size() - 1))) {
+        while (!kingdomList.get(i).equals(kingdomList.get(kingdomList.size() - 1))) { //while current kingdom differs from last one
             r = r + kingdomList.get(i).getName() + "; ";
             i++;
         }

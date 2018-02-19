@@ -19,11 +19,11 @@ public class Main {
         // TODO code application logic here
         Game game = new Game();
         String[] info;
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in); //get user input
         
         
         System.out.print(game.getKingdom() + "> ");
-        info = sc.nextLine().toLowerCase().split(" ");
+        info = sc.nextLine().toLowerCase().split(" "); //user input to analyze
         
         while (!(info[0].equals("sai"))) {
             game.getPlay(info);

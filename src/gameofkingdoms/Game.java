@@ -5,6 +5,7 @@
  */
 package gameofkingdoms;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -58,12 +59,14 @@ public class Game {
                 break;
             case "castelos":
                 if (gameActive) {
+                    giveCastles();
                 } else {
                     System.out.println("Comando inativo.");
                 }
                 break;
             case "exercito":
                 if (gameActive) {
+                    getArmy();
                 } else {
                     System.out.println("Comando inativo.");
                 }
@@ -102,7 +105,7 @@ public class Game {
             System.out.println("Erro fatal, jogo nao inicializado");
             return false;
         }
-        
+
         sizeH = maxX;
         sizeV = maxY;
         Scanner sc = new Scanner(System.in);
@@ -175,12 +178,13 @@ public class Game {
         System.out.println(String.valueOf(sizeH) + " " + String.valueOf(sizeV));
         System.out.println(String.valueOf(castles.numberOfCastles()) + " castelos:");
         for (Castle castle : castles.getAllCastles()) {
+            //iterates every castle in game and prints corresponding info
             System.out.println(castle.getName() + " (" + castle.getCurrentOwner() + ")");
         }
         System.out.println(String.valueOf(kingdoms.nKingdoms()) + " reinos:");
         kingdoms.displayKingdoms();
     }
-    
+
     public void displayHelpScreen() {
         System.out.println("novo - Novo jogo");
         if (gameActive) {
@@ -196,6 +200,22 @@ public class Game {
         System.out.println("sai - Termina a execucao do programa");
     }
 
+    public void giveCastles() {
+        ArrayList<Castle> playerCastles = kingdoms.getCurrentKingdom().getCastles().getAllCastles();
+        if (playerCastles.isEmpty()) {
+            System.out.println("Sem castelos.");
+        } else {
+            System.out.println(playerCastles.size() + " castelos:");
+            for (Castle castle : playerCastles) {
+                System.out.println(castle.getName() + " com riqueza " + castle.getCurrentMoney() + " na posicao (" + castle.getPosition()[0] + ',' + castle.getPosition()[1] + ')');
+            }
+        }
+    }
+
+    public void getArmy() {
+        kingdoms.getCurrentKingdom().displayAllSoldiers();
+    }
+    
     public String getKingdom() {
         return kingdom;
     }

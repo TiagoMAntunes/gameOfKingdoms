@@ -1,8 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ *  This class specifies a location for each game element
+*/
 package gameofkingdoms;
 
 /**
@@ -26,6 +24,7 @@ public class Position {
     }
     
     public void updatePosition(int xValue, int yValue) {
+        //updates position relatively
         x += xValue;
         y += yValue;
     }
